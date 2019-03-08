@@ -1,0 +1,170 @@
+﻿
+\begin{tikzpicture}[scale=0.125]
+
+%\draw [-latex, very thick, gray] (0,25) -- node [above, black] {Feature Identification, Compression, and/or Abstraction of Data Representation} (136,25);
+
+% input layer
+\draw [thick] (-1,16) node[above right] {Scalogram};
+\draw [thick] (0,0) rectangle (20,16);
+\draw [thick, fill=gray] (0,11) rectangle (5,16);
+
+% first layer: convolutional
+\begin{scope}[shift = {(30,2)}]
+\draw (-1,15) node[above right] {Convolutional};
+\draw [thick] (0,0) rectangle (18,14);
+\draw [shift = {(2,-2)}, fill=white, thick] (0,0) rectangle (18,14);
+\draw [shift = {(4,-4)}, fill=white, thick] (0,0) rectangle (18,14);
+\draw [shift = {(6,-6)}, fill=white, thick] (0,0) rectangle (18,14);
+\draw [shift = {(0+6,14-6)}, fill=gray, thick] (0,0) rectangle (1,-1);
+\draw [shift = {(6,-6)}, fill=gray, thick] (0,0) rectangle (2,2);
+\end{scope}
+
+% connect kernel on layer 0 with output on layer 1
+\draw [thick, dotted] (5,11) -- (36,9);
+\draw [thick, dotted] (5,16) -- (36,10);
+
+% second layer: max pooling
+\begin{scope}[shift = {(60,9)}]
+\draw (-1,7) node[above right] {Maxpool};
+\draw [thick] (0,0) rectangle (9,7);
+\draw [shift = {(2,-2)}, fill=white, thick] (0,0) rectangle (9,7);
+\draw [shift = {(4,-4)}, fill=white, thick] (0,0) rectangle (9,7);
+\draw [shift = {(6,-6)}, fill=white, thick] (0,0) rectangle (9,7);
+
+\draw [shift = {(6,1)}, fill=gray, thick] (0,0) rectangle (2,-2);
+\draw [shift = {(6,-6)}, fill=gray, thick] (0,0) rectangle (1,1);
+\end{scope}
+
+% connect kernel on layer 1 with output on layer 2
+\draw [thick, dotted] (38,-2) -- (66,4);
+\draw [thick, dotted] (38,-4) -- (66,3);
+
+
+% third layer: convolutional
+\begin{scope}[shift = {(90,2)}]
+\draw (-1,15) node[above right] {Convolutional};
+\draw [shift = {(0,8)}, thick] (0,0) rectangle (8,6);
+\draw [shift = {(2,8-2)}, fill=white, thick] (0,0) rectangle (8,6);
+\draw [shift = {(4,8-4)}, fill=white, thick] (0,0) rectangle (8,6);
+\draw [shift = {(6,8-6)}, fill=white, thick] (0,0) rectangle (8,6);
+\draw [shift = {(8,8-8)}, fill=white, thick] (0,0) rectangle (8,6);
+\draw [shift = {(10,8-10)}, fill=white, thick] (0,0) rectangle (8,6);
+\draw [shift = {(12,8-12)}, fill=white, thick] (0,0) rectangle (8,6);
+
+\draw [shift = {(12,8-7)}, fill=gray, thick] (0,0) rectangle (1,1);
+\draw [shift = {(12,8-12)}, fill=gray, thick] (0,0) rectangle (3,3);
+\end{scope}
+
+
+% connect kernel on layer 2 with output on layer 3
+\draw [thick, dotted] (68,10) -- (102,4);
+\draw [thick, dotted] (68,8) -- (102,3);
+
+
+% fourth layer: max pooling
+\begin{scope}[shift = {(120,2)}]
+\draw (-1,14) node[above right] {Maxpool};
+\draw [shift = {(0,10)}, thick] (0,0) rectangle (4,3);
+\draw [shift = {(2,10-2)}, fill=white, thick] (0,0) rectangle (4,3);
+\draw [shift = {(4,10-4)}, fill=white, thick] (0,0) rectangle (4,3);
+\draw [shift = {(6,10-6)}, fill=white, thick] (0,0) rectangle (4,3);
+\draw [shift = {(8,10-8)}, fill=white, thick] (0,0) rectangle (4,3);
+\draw [shift = {(10,10-10)}, fill=white, thick] (0,0) rectangle (4,3);
+\draw [shift = {(12,10-12)}, fill=white, thick] (0,0) rectangle (4,3);
+\draw [shift = {(12,10-12)}, fill=gray, thick] (0,0) rectangle (1,1);
+\end{scope}
+
+% connect kernel on layer 3 with output on layer 4
+\draw [thick, dotted] (105,1) -- (132,1);
+\draw [thick, dotted] (105,-2) -- (132,0);
+
+% the flattening
+\draw [-latex, very thick] (134,-3) -- (134,-10) -- node[above] {Flatten} (0,-10) -- (0,-47.5) -- (5,-47.5);
+
+
+\draw (20,-20) node {Affine};
+\draw (44,-17) node {Activation};
+\draw (68,-25) node {Affine};
+\draw (88,-35) node {Softmax};
+\draw (102,-35) node [right] {Output};
+\draw (102,-40.5) node [right] {Species 1 probability};
+\draw (102,-45.5) node [right] {Species 2 probability};
+\draw (102,-50.5) node [right] {Species 3 probability};
+\draw (102,-55.5) node [right] {Species 4 probability};
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  densely connected layers
+
+
+
+\begin{scope}[shift={(10,-70)},scale=5]
+\def\nZero{8} % number of nodes in layer 0
+\def\nOne{12} % number of nodes in layer 1
+\def\nTwo{\nOne} % number of nodes in layer 2
+\def\nThree{4}
+\def\nFour{4}
+\def\spacebetweenlayers{4.5}
+
+%\draw (2,11) node [below] {\Large Affine};
+%\draw (6,11) node [below] {\Large Activation};
+%\draw (10,11) node [below] {\Large Affine};
+%\draw (14,11) node [below, text width=3cm] {\Large Softmax Activation};
+
+
+% lines connecting layer 0 to layer 1
+\foreach \x in {1,...,\nZero}{
+	\foreach \y in {1,...,\nOne}{
+		\draw (0,\x) -- (1*\spacebetweenlayers,\y-2);
+	}
+}
+
+% lines connecting layer 1 to layer 2
+\foreach \x in {1,...,\nOne}{
+	\foreach \y in {1,...,\nTwo}{
+		\draw (1*\spacebetweenlayers,\x-2) -- (2*\spacebetweenlayers,\y-2);
+	}
+}
+
+% lines connecting layer 2 to layer 3
+\foreach \x in {1,...,\nTwo}{
+	\foreach \y in {1,...,\nThree}{
+		\draw (2*\spacebetweenlayers,\x-2) -- (3*\spacebetweenlayers,\y+2);
+	}
+}
+
+% lines connecting layer 2 to layer 3
+\foreach \x in {1,...,\nThree}{
+	\foreach \y in {1,...,\nFour}{
+		\draw (3*\spacebetweenlayers,\x+2) -- (4*\spacebetweenlayers,\y+2);
+	}
+}
+
+% layer 0
+\foreach \x in {1,...,\nZero}{
+	\draw [fill=gray] (0,\x) circle [radius=0.2];
+}
+
+% layer 1
+\foreach \n in {1,...,\nOne}{
+	\draw [fill=gray] (1*\spacebetweenlayers,\n-2) circle [radius=0.2];
+}
+
+% layer 2
+\foreach \n in {1,...,\nTwo}{
+	\draw [fill=gray] (2*\spacebetweenlayers,\n-2) circle [radius=0.2];
+}
+
+% layer 3
+\foreach \n in {1,...,\nThree}{
+	\draw [fill=gray] (3*\spacebetweenlayers,\n+2) circle [radius=0.2];
+}
+
+% layer 4
+\foreach \n in {1,...,\nFour}{
+	\draw [fill=gray] (4*\spacebetweenlayers,\n+2) circle [radius=0.2];
+	%\draw (4*\spacebetweenlayers+0.5,7-\n) node [right] {\Large Bird \n};
+}
+
+\end{scope}
+
+\end{tikzpicture}

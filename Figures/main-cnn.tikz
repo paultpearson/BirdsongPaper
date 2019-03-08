@@ -1,0 +1,21 @@
+﻿\tikzstyle{block} = [rectangle, draw, fill=white!20, 
+text width=6em, text centered,  minimum height=2.5em]
+\tikzstyle{line} = [draw, -latex]
+
+\begin{tikzpicture}[node distance = 3.5cm, auto]
+\node [block] (init1) {Input: Scalogram};		
+\node [block, right of = init1] (init2) {$9\times 9$ Conv2D, 16 Channels, ReLU};
+\node [block, right of = init2] (init3) {$4\times 4$ Max-pooling};
+\node [block, right of=init3] (init4) {$3 \times 3$ Conv2D, 16 Channels, ReLU};
+\node [block, right of=init4] (init5) {$4\times 4$ Max-pooling};		
+\node [block, below of = init1] (init6) {Dense~Layer, 100 Nodes, ReLU};		
+\node [block, right of = init6] (init7) {Dense~Layer, 100 Nodes, ReLU};		
+\node [block, right of = init7] (init8) {Output: Dense~Layer, 4 Nodes, Softmax};		
+\path [line] (init1) -- (init2);
+\path [line] (init2) -- (init3);
+\path [line] (init3) -- (init4);
+\path [line] (init4) -- (init5);
+\path [line] (init5.south) -- node [sloped, above] {flatten} (init6.north);
+\path [line] (init6) -- (init7);
+\path [line] (init7) -- (init8);
+\end{tikzpicture}
