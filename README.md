@@ -16,7 +16,7 @@ The files in this repository support the book chapter "Using Neural Networks to 
 	
 	- The outputs are HDF5 files that contain the neural network that was trained.
 
-- Fgures in the book chapter are in the directory `Figures` together with a Jupyter notebook that generates most of them.  The source code for all figures is included.
+- Fgures in the book chapter are in the directory `Figures` together with a Jupyter notebook `Figures_for_Birdsong_Paper` that generates most of them.  The source code for all figures is included.
 
 ### Installing
 
